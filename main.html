@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link href="styles.css" rel="stylesheet"></link>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Meeting Date Voting</title>
+</head>
+<body>
+
+<div class="container">
+    <h1>Vote for Meeting Date</h1>
+    <p>Select a date for the meeting:</p>
+    <p class="me">Please ensure to select a date from 29th April to 18th May</p>
+    <form id="voteForm">
+        <input type="date" name="date" id="meetingDate" min="2024-04-29" max="2024-05-18">
+        <button type="submit" id="submitBtn">Submit Vote</button>
+    </form>
+    <div id="result"></div>
+</div>
+
+<script>
+    document.getElementById('voteForm').addEventListener('submit', function(event) {
+        event.preventDefault();
+        var selectedDate = document.getElementById('meetingDate').value;
+        var votes = JSON.parse(localStorage.getItem('votes')) || {};
+        
+        if (!votes[selectedDate]) {
+            votes[selectedDate] = 1;
+            localStorage.setItem('votes', JSON.stringify(votes));
+            showResults();
+            document.getElementById('submitBtn').disabled = true; // Disable the submit button after voting
+        } else {
+            alert('You have already voted for this date!');
+        }
+    });
+
+    function showResults() {
+        var votes = JSON.parse(localStorage.getItem('votes')) || {};
+        var totalVotes = Object.values(votes).reduce((acc, cur) => acc + cur, 0);
+
+        var resultDiv = document.getElementById('result');
+        resultDiv.innerHTML = '<h2>Results</h2>';
+        
+        for (var date in votes) {
+            var percentage = ((votes[date] / totalVotes) * 100).toFixed(2);
+            resultDiv.innerHTML += '<p>' + date + ': ' + percentage + '%</p>';
+        }
+    }
+
+    // Call showResults on page load
+    showResults();
+</script>
+
+</body>
+</html>

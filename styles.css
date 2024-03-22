@@ -1,0 +1,16 @@
+   body {
+        background-color: orange;
+        font-family: Arial, sans-serif;
+    }
+    .container {
+        max-width: 600px;
+        margin: 0 auto;
+        padding: 20px;
+        text-align: center;
+    }
+    .me {
+        color: blue;
+    }
+    #meetingDate {
+        color: green;
+    }
